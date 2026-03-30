@@ -1,12 +1,12 @@
 import { useLocation, Link } from 'react-router-dom';
-import { LayoutDashboard, Users, ClipboardList, BarChart3, Download } from 'lucide-react';
+import { LayoutDashboard, Users, ClipboardList, BarChart3, Settings } from 'lucide-react';
 
 const navItems = [
   { label: 'ড্যাশবোর্ড', path: '/', icon: LayoutDashboard },
   { label: 'সদস্য', path: '/members', icon: Users },
   { label: 'আদায়', path: '/collection', icon: ClipboardList },
   { label: 'রিপোর্ট', path: '/yearly', icon: BarChart3 },
-  { label: 'ইনস্টল', path: '/install', icon: Download },
+  { label: 'সেটিংস', path: '/settings', icon: Settings },
 ];
 
 const triggerHaptic = () => {
