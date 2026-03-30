@@ -40,6 +40,7 @@ const App = () => {
             <Route path="/members" element={<MembersPage />} />
             <Route path="/collection" element={<CollectionSheet />} />
             <Route path="/yearly" element={<YearlyReport />} />
+            <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

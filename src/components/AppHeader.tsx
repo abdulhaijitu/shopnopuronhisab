@@ -9,6 +9,7 @@ const navItems = [
   { path: '/members', label: 'সদস্য তালিকা', icon: Users },
   { path: '/collection', label: 'হিসাব সিট', icon: FileSpreadsheet },
   { path: '/yearly', label: 'বার্ষিক রিপোর্ট', icon: BarChart3 },
+  { path: '/settings', label: 'সেটিংস', icon: Settings },
 ];
 
 export default function AppHeader() {
