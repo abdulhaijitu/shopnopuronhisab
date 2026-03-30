@@ -1,0 +1,62 @@
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { APP_PASSWORD } from '@/lib/types';
+import { setAuthenticated } from '@/lib/store';
+import { Lock } from 'lucide-react';
+
+interface Props { onSuccess: () => void; }
+
+export default function LoginScreen({ onSuccess }: Props) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === APP_PASSWORD) {
+      setAuthenticated(true);
+      onSuccess();
+    } else {
+      setError('ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।');
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--coop-blue)/0.1)] via-background to-[hsl(var(--coop-green)/0.1)] p-4">
+      <Card className="w-full max-w-md shadow-2xl border-t-4 border-t-[hsl(var(--coop-blue))]">
+        <CardHeader className="text-center space-y-3">
+          <div className="mx-auto w-16 h-16 bg-[hsl(var(--coop-green))] rounded-full flex items-center justify-center">
+            <Lock className="h-8 w-8 text-white" />
+          </div>
+          <CardTitle className="text-2xl text-[hsl(var(--coop-blue))]">
+            স্বপ্নপূরণ সমবায় সমিতি
+          </CardTitle>
+          <CardDescription className="text-sm">
+            গাউছুল আজম সুপার মার্কেট, কাঁটাবন রোড, ঢাকা-১২০৫
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="password">পাসওয়ার্ড দিন</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={e => { setPassword(e.target.value); setError(''); }}
+                placeholder="পাসওয়ার্ড"
+                autoFocus
+              />
+              {error && <p className="text-sm text-destructive">{error}</p>}
+            </div>
+            <Button type="submit" className="w-full bg-[hsl(var(--coop-blue))] hover:bg-[hsl(var(--coop-blue)/0.9)]">
+              প্রবেশ করুন
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
