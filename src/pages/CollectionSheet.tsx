@@ -22,7 +22,7 @@ interface RowData {
 
 export default function CollectionSheet() {
   const currentMonthIdx = new Date().getMonth();
-  const [selectedMonth, setSelectedMonth] = useState(MONTHS[currentMonthIdx]);
+  const [selectedMonth, setSelectedMonth] = useState<string>(MONTHS[currentMonthIdx]);
   const [rows, setRows] = useState<RowData[]>([]);
 
   const loadData = useCallback(() => {
