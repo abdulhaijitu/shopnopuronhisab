@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 import { bn } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface RowData {
   member: Member;
@@ -26,13 +27,13 @@ export default function CollectionSheet() {
   const [selectedYear, setSelectedYear] = useState<string>(new Date().getFullYear().toString());
   const [rows, setRows] = useState<RowData[]>([]);
   const years = getYearsList();
+  const isMobile = useIsMobile();
 
   const monthKey = `${selectedMonth}-${selectedYear}`;
 
   const loadData = useCallback(() => {
     const members = getMembers();
     const allCollections = getCollections(monthKey);
-    // backward compat: also check old format (just month name)
     const oldCollections = selectedYear === new Date().getFullYear().toString() ? getCollections(selectedMonth) : [];
     const combined = [...allCollections, ...oldCollections];
     const data: RowData[] = members.map(m => {
@@ -101,7 +102,7 @@ export default function CollectionSheet() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6 space-y-4">
-      {/* Print header - only visible when printing */}
+      {/* Print header */}
       <div className="hidden print:block text-center mb-4">
         <h1 className="text-xl font-bold">স্বপ্নপূরণ সমবায় সমিতি</h1>
         <p className="text-sm">গাউছুল আজম সুপার মার্কেট, কাঁটাবন রোড, ঢাকা-১২০৫</p>
@@ -109,77 +110,96 @@ export default function CollectionSheet() {
         <p className="text-base font-bold mt-2">মাসিক আদায় সিট — {selectedMonth} {selectedYear}</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 no-print">
-        <h2 className="text-xl font-bold">প্রতি মাসের হিসাব সিট</h2>
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">বছর:</span>
-          <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className="w-24">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {years.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <span className="text-sm font-medium">মাস:</span>
-          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger className="w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {MONTHS.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-            </SelectContent>
-          </Select>
+      {/* Sticky action bar */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-3 space-y-3 no-print border-b border-border -mx-4 px-4 pt-2 sm:-mx-6 sm:px-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <h2 className="text-lg sm:text-xl font-bold">প্রতি মাসের হিসাব সিট</h2>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger className="w-20 h-8 text-xs sm:w-24 sm:h-9 sm:text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {years.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+              <SelectTrigger className="w-28 h-8 text-xs sm:w-40 sm:h-9 sm:text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {MONTHS.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Summary + actions in one row */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="bg-[hsl(var(--coop-blue)/0.1)] text-[hsl(var(--coop-blue))] px-2 py-0.5 rounded-full text-xs font-medium">
+            সদস্য: {rows.length}
+          </span>
+          <span className="bg-[hsl(var(--coop-green)/0.1)] text-[hsl(var(--coop-green))] px-2 py-0.5 rounded-full text-xs font-medium">
+            আদায়: {paidCount}/{rows.length}
+          </span>
+          <span className="bg-[hsl(var(--coop-red)/0.1)] text-[hsl(var(--coop-red))] px-2 py-0.5 rounded-full text-xs font-medium">
+            ৳{totalCollection.toLocaleString('bn-BD')}
+          </span>
+          <div className="flex gap-1.5 ml-auto">
+            <Button onClick={handleSave} size="sm" className="h-7 text-xs bg-[hsl(var(--coop-green))] hover:bg-[hsl(var(--coop-green)/0.9)]">
+              <Save className="h-3.5 w-3.5 mr-1" /> সংরক্ষণ
+            </Button>
+            <Button onClick={handlePrint} variant="outline" size="sm" className="h-7 text-xs">
+              <Printer className="h-3.5 w-3.5" />
+            </Button>
+            <Button onClick={handleExportCSV} variant="outline" size="sm" className="h-7 text-xs">
+              <Download className="h-3.5 w-3.5" />
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Summary bar */}
-      <div className="flex flex-wrap gap-4 text-sm no-print">
-        <span className="bg-[hsl(var(--coop-blue)/0.1)] text-[hsl(var(--coop-blue))] px-3 py-1 rounded-full font-medium">
-          মোট সদস্য: {rows.length}
-        </span>
-        <span className="bg-[hsl(var(--coop-green)/0.1)] text-[hsl(var(--coop-green))] px-3 py-1 rounded-full font-medium">
-          আদায়কৃত: {paidCount}/{rows.length}
-        </span>
-        <span className="bg-[hsl(var(--coop-red)/0.1)] text-[hsl(var(--coop-red))] px-3 py-1 rounded-full font-medium">
-          মোট আদায়: ৳{totalCollection.toLocaleString('bn-BD')}
-        </span>
-      </div>
-
-      {/* Ledger table */}
-      <div className="overflow-x-auto rounded-lg border">
-        <table className="ledger-table">
-          <thead>
-            <tr>
-              <th className="w-12">নং</th>
-              <th>সদস্যের নাম</th>
-              <th className="hidden sm:table-cell">পেশা</th>
-              <th className="hidden sm:table-cell">মোবাইল</th>
-              <th className="w-16">শেয়ার</th>
-              <th className="w-28">টাকার পরিমাণ</th>
-              <th className="w-40">টাকা প্রদানের তারিখ</th>
-              <th className="w-24">স্ট্যাটাস</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, idx) => (
-              <tr key={row.member.id} className={row.paid ? 'bg-[hsl(var(--coop-green)/0.05)]' : ''}>
-                <td className="text-center">{idx + 1}</td>
-                <td className="font-medium">{row.member.name}</td>
-                <td className="hidden sm:table-cell">{row.member.occupation}</td>
-                <td className="hidden sm:table-cell">{row.member.mobile}</td>
-                <td className="text-center">{row.member.shares}</td>
-                <td>
+      {/* Mobile card view */}
+      {isMobile ? (
+        <div className="space-y-3 print:hidden">
+          {rows.map((row, idx) => (
+            <div
+              key={row.member.id}
+              className={cn(
+                'rounded-lg border bg-card p-3 space-y-3',
+                row.paid && 'border-[hsl(var(--coop-green)/0.4)] bg-[hsl(var(--coop-green)/0.03)]'
+              )}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xs text-muted-foreground">#{idx + 1}</span>
+                  <h3 className="font-semibold text-sm">{row.member.name}</h3>
+                  <p className="text-xs text-muted-foreground">শেয়ার: {row.member.shares}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={row.paid}
+                    onCheckedChange={v => updateRow(idx, 'paid', !!v)}
+                  />
+                  <span className={cn('text-xs font-medium', row.paid ? 'text-[hsl(var(--coop-green))]' : 'text-muted-foreground')}>
+                    {row.paid ? 'পরিশোধিত' : 'বাকি'}
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="text-xs text-muted-foreground mb-1 block">টাকা</label>
                   <Input
                     type="number"
                     min={0}
                     value={row.amount || ''}
                     onChange={e => updateRow(idx, 'amount', parseInt(e.target.value) || 0)}
-                    className="h-8 text-sm w-full"
+                    className="h-8 text-sm"
                     placeholder="০"
                   />
-                </td>
-                <td>
+                </div>
+                <div className="flex-1">
+                  <label className="text-xs text-muted-foreground mb-1 block">তারিখ</label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -188,7 +208,7 @@ export default function CollectionSheet() {
                         className={cn('w-full justify-start text-left font-normal h-8 text-xs', !row.paymentDate && 'text-muted-foreground')}
                       >
                         <CalendarIcon className="h-3 w-3 mr-1" />
-                        {row.paymentDate ? format(new Date(row.paymentDate), 'dd/MM/yyyy') : 'তারিখ'}
+                        {row.paymentDate ? format(new Date(row.paymentDate), 'dd/MM/yy') : 'তারিখ'}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -196,53 +216,147 @@ export default function CollectionSheet() {
                         mode="single"
                         selected={row.paymentDate ? new Date(row.paymentDate) : undefined}
                         onSelect={d => updateRow(idx, 'paymentDate', d ? d.toISOString() : '')}
-                        className={cn('p-3 pointer-events-auto')}
+                        className="p-3 pointer-events-auto"
                         locale={bn}
                       />
                     </PopoverContent>
                   </Popover>
-                </td>
-                <td className="text-center">
-                  <div className="flex items-center justify-center gap-2">
-                    <Checkbox
-                      checked={row.paid}
-                      onCheckedChange={v => updateRow(idx, 'paid', !!v)}
+                </div>
+              </div>
+            </div>
+          ))}
+          {rows.length === 0 && (
+            <p className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই। প্রথমে সদস্য যুক্ত করুন।</p>
+          )}
+        </div>
+      ) : (
+        /* Desktop table view */
+        <div className="table-scroll-wrapper print:border-0">
+          <table className="ledger-table">
+            <thead>
+              <tr>
+                <th className="w-12">নং</th>
+                <th>সদস্যের নাম</th>
+                <th className="hidden sm:table-cell">পেশা</th>
+                <th className="hidden sm:table-cell">মোবাইল</th>
+                <th className="w-16">শেয়ার</th>
+                <th className="w-28">টাকার পরিমাণ</th>
+                <th className="w-40">টাকা প্রদানের তারিখ</th>
+                <th className="w-24">স্ট্যাটাস</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, idx) => (
+                <tr key={row.member.id} className={row.paid ? 'bg-[hsl(var(--coop-green)/0.05)]' : ''}>
+                  <td className="text-center">{idx + 1}</td>
+                  <td className="font-medium">{row.member.name}</td>
+                  <td className="hidden sm:table-cell">{row.member.occupation}</td>
+                  <td className="hidden sm:table-cell">{row.member.mobile}</td>
+                  <td className="text-center">{row.member.shares}</td>
+                  <td>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={row.amount || ''}
+                      onChange={e => updateRow(idx, 'amount', parseInt(e.target.value) || 0)}
+                      className="h-8 text-sm w-full"
+                      placeholder="০"
                     />
-                    <span className={`text-xs font-medium ${row.paid ? 'text-[hsl(var(--coop-green))]' : 'text-muted-foreground'}`}>
-                      {row.paid ? 'পরিশোধিত' : 'বাকি'}
-                    </span>
-                  </div>
-                </td>
+                  </td>
+                  <td>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className={cn('w-full justify-start text-left font-normal h-8 text-xs', !row.paymentDate && 'text-muted-foreground')}
+                        >
+                          <CalendarIcon className="h-3 w-3 mr-1" />
+                          {row.paymentDate ? format(new Date(row.paymentDate), 'dd/MM/yyyy') : 'তারিখ'}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={row.paymentDate ? new Date(row.paymentDate) : undefined}
+                          onSelect={d => updateRow(idx, 'paymentDate', d ? d.toISOString() : '')}
+                          className="p-3 pointer-events-auto"
+                          locale={bn}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </td>
+                  <td className="text-center">
+                    <div className="flex items-center justify-center gap-2">
+                      <Checkbox
+                        checked={row.paid}
+                        onCheckedChange={v => updateRow(idx, 'paid', !!v)}
+                      />
+                      <span className={`text-xs font-medium ${row.paid ? 'text-[hsl(var(--coop-green))]' : 'text-muted-foreground'}`}>
+                        {row.paid ? 'পরিশোধিত' : 'বাকি'}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {rows.length === 0 && (
+                <tr><td colSpan={8} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই। প্রথমে সদস্য যুক্ত করুন।</td></tr>
+              )}
+            </tbody>
+            {rows.length > 0 && (
+              <tfoot>
+                <tr className="bg-muted font-bold">
+                  <td colSpan={5} className="text-right">মোট আদায়:</td>
+                  <td className="text-center">৳{totalCollection.toLocaleString('bn-BD')}</td>
+                  <td></td>
+                  <td className="text-center text-sm">{paidCount}/{rows.length} জন</td>
+                </tr>
+              </tfoot>
+            )}
+          </table>
+        </div>
+      )}
+
+      {/* Print-only table (always full table for printing) */}
+      <div className="hidden print:block">
+        <table className="ledger-table">
+          <thead>
+            <tr>
+              <th>নং</th>
+              <th>সদস্যের নাম</th>
+              <th>পেশা</th>
+              <th>মোবাইল</th>
+              <th>শেয়ার</th>
+              <th>টাকার পরিমাণ</th>
+              <th>তারিখ</th>
+              <th>স্ট্যাটাস</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, idx) => (
+              <tr key={row.member.id}>
+                <td className="text-center">{idx + 1}</td>
+                <td>{row.member.name}</td>
+                <td>{row.member.occupation}</td>
+                <td>{row.member.mobile}</td>
+                <td className="text-center">{row.member.shares}</td>
+                <td className="text-center">{row.amount > 0 ? `৳${row.amount.toLocaleString('bn-BD')}` : '—'}</td>
+                <td>{row.paymentDate ? format(new Date(row.paymentDate), 'dd/MM/yyyy') : ''}</td>
+                <td className="text-center">{row.paid ? 'পরিশোধিত' : 'বাকি'}</td>
               </tr>
             ))}
-            {rows.length === 0 && (
-              <tr><td colSpan={8} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই। প্রথমে সদস্য যুক্ত করুন।</td></tr>
-            )}
           </tbody>
           {rows.length > 0 && (
             <tfoot>
-              <tr className="bg-muted font-bold">
+              <tr className="font-bold">
                 <td colSpan={5} className="text-right">মোট আদায়:</td>
                 <td className="text-center">৳{totalCollection.toLocaleString('bn-BD')}</td>
                 <td></td>
-                <td className="text-center text-sm">{paidCount}/{rows.length} জন</td>
+                <td className="text-center">{paidCount}/{rows.length} জন</td>
               </tr>
             </tfoot>
           )}
         </table>
-      </div>
-
-      {/* Action buttons */}
-      <div className="flex flex-wrap gap-3 no-print">
-        <Button onClick={handleSave} className="bg-[hsl(var(--coop-green))] hover:bg-[hsl(var(--coop-green)/0.9)]">
-          <Save className="h-4 w-4 mr-1" /> সংরক্ষণ করুন
-        </Button>
-        <Button onClick={handlePrint} variant="outline">
-          <Printer className="h-4 w-4 mr-1" /> প্রিন্ট করুন
-        </Button>
-        <Button onClick={handleExportCSV} variant="outline">
-          <Download className="h-4 w-4 mr-1" /> CSV ডাউনলোড
-        </Button>
       </div>
     </div>
   );
