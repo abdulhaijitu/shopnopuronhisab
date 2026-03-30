@@ -54,6 +54,7 @@ const App = () => {
                     <Route path="/collection" element={<CollectionSheet />} />
                     <Route path="/yearly" element={<YearlyReport />} />
                     <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/install" element={<InstallPage />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
