@@ -14,19 +14,19 @@ export default function MembersPage() {
   const [members, setMembers] = useState<Member[]>(getMembers());
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Member | null>(null);
-  const [form, setForm] = useState({ name: '', mobile: '', shares: 1 });
+  const [form, setForm] = useState({ name: '', occupation: '', mobile: '', shares: 1 });
 
   const refresh = () => setMembers(getMembers());
 
   const openAdd = () => {
     setEditing(null);
-    setForm({ name: '', mobile: '', shares: 1 });
+    setForm({ name: '', occupation: '', mobile: '', shares: 1 });
     setDialogOpen(true);
   };
 
   const openEdit = (m: Member) => {
     setEditing(m);
-    setForm({ name: m.name, mobile: m.mobile, shares: m.shares });
+    setForm({ name: m.name, occupation: m.occupation, mobile: m.mobile, shares: m.shares });
     setDialogOpen(true);
   };
 
@@ -66,6 +66,7 @@ export default function MembersPage() {
             <tr>
               <th className="w-16">নং</th>
               <th>সদস্যের নাম</th>
+              <th>পেশা</th>
               <th>মোবাইল</th>
               <th className="w-20">শেয়ার</th>
               <th className="w-28 no-print">অ্যাকশন</th>
@@ -76,6 +77,7 @@ export default function MembersPage() {
               <tr key={m.id}>
                 <td className="text-center">{i + 1}</td>
                 <td>{m.name}</td>
+                <td>{m.occupation}</td>
                 <td>{m.mobile}</td>
                 <td className="text-center">{m.shares}</td>
                 <td className="no-print">
@@ -91,7 +93,7 @@ export default function MembersPage() {
               </tr>
             ))}
             {members.length === 0 && (
-              <tr><td colSpan={5} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই</td></tr>
+              <tr><td colSpan={6} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই</td></tr>
             )}
           </tbody>
         </table>
@@ -107,6 +109,10 @@ export default function MembersPage() {
             <div className="space-y-2">
               <Label>সদস্যের নাম</Label>
               <Input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="নাম লিখুন" />
+            </div>
+            <div className="space-y-2">
+              <Label>পেশা</Label>
+              <Input value={form.occupation} onChange={e => setForm({ ...form, occupation: e.target.value })} placeholder="পেশা লিখুন" />
             </div>
             <div className="space-y-2">
               <Label>মোবাইল নম্বর</Label>

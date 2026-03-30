@@ -136,6 +136,7 @@ export default function CollectionSheet() {
             <tr>
               <th className="w-12">নং</th>
               <th>সদস্যের নাম</th>
+              <th className="hidden sm:table-cell">পেশা</th>
               <th className="hidden sm:table-cell">মোবাইল</th>
               <th className="w-16">শেয়ার</th>
               <th className="w-28">টাকার পরিমাণ</th>
@@ -148,6 +149,7 @@ export default function CollectionSheet() {
               <tr key={row.member.id} className={row.paid ? 'bg-[hsl(var(--coop-green)/0.05)]' : ''}>
                 <td className="text-center">{idx + 1}</td>
                 <td className="font-medium">{row.member.name}</td>
+                <td className="hidden sm:table-cell">{row.member.occupation}</td>
                 <td className="hidden sm:table-cell">{row.member.mobile}</td>
                 <td className="text-center">{row.member.shares}</td>
                 <td>
@@ -197,13 +199,13 @@ export default function CollectionSheet() {
               </tr>
             ))}
             {rows.length === 0 && (
-              <tr><td colSpan={7} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই। প্রথমে সদস্য যুক্ত করুন।</td></tr>
+              <tr><td colSpan={8} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই। প্রথমে সদস্য যুক্ত করুন।</td></tr>
             )}
           </tbody>
           {rows.length > 0 && (
             <tfoot>
               <tr className="bg-muted font-bold">
-                <td colSpan={4} className="text-right">মোট আদায়:</td>
+                <td colSpan={5} className="text-right">মোট আদায়:</td>
                 <td className="text-center">৳{totalCollection.toLocaleString('bn-BD')}</td>
                 <td></td>
                 <td className="text-center text-sm">{paidCount}/{rows.length} জন</td>
