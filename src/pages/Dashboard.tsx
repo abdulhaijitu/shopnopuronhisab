@@ -58,7 +58,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {cards.map((c, i) => (
           <Card key={i} className="border-l-4" style={{ borderLeftColor: `hsl(${c.color})` }}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">

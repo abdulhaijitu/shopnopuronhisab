@@ -41,7 +41,7 @@ const App = () => {
               <div className="flex-1 flex flex-col min-w-0">
                 <header className="no-print h-12 flex items-center border-b border-border bg-background px-4 gap-3">
                   <SidebarTrigger />
-                  <h2 className="text-sm font-semibold text-[hsl(var(--coop-green))] truncate">
+                  <h2 className="hidden sm:block text-sm font-semibold text-[hsl(var(--coop-green))] truncate">
                     স্বপ্নপূরণ সমবায় সমিতি
                   </h2>
                 </header>
