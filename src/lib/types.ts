@@ -2,6 +2,7 @@ export interface Member {
   id: string;
   serial: number;
   name: string;
+  occupation: string;
   mobile: string;
   shares: number;
 }
