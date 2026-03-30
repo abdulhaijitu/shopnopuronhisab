@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Save, Printer } from 'lucide-react';
+import { CalendarIcon, Save, Printer, Download } from 'lucide-react';
 import { format } from 'date-fns';
 import { bn } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
@@ -61,6 +61,31 @@ export default function CollectionSheet() {
   const handlePrint = () => {
     handleSave();
     window.print();
+  };
+
+  const handleExportCSV = () => {
+    const BOM = '\uFEFF';
+    const headers = ['নং', 'সদস্যের নাম', 'মোবাইল', 'শেয়ার', 'টাকার পরিমাণ', 'টাকা প্রদানের তারিখ', 'স্ট্যাটাস'];
+    const csvRows = [headers.join(',')];
+    rows.forEach((r, i) => {
+      csvRows.push([
+        i + 1,
+        `"${r.member.name}"`,
+        r.member.mobile,
+        r.member.shares,
+        r.amount,
+        r.paymentDate ? format(new Date(r.paymentDate), 'dd/MM/yyyy') : '',
+        r.paid ? 'পরিশোধিত' : 'বাকি',
+      ].join(','));
+    });
+    const blob = new Blob([BOM + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `হিসাব_সিট_${selectedMonth}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('CSV ফাইল ডাউনলোড হচ্ছে');
   };
 
   const totalCollection = rows.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
@@ -189,12 +214,15 @@ export default function CollectionSheet() {
       </div>
 
       {/* Action buttons */}
-      <div className="flex gap-3 no-print">
+      <div className="flex flex-wrap gap-3 no-print">
         <Button onClick={handleSave} className="bg-[hsl(var(--coop-green))] hover:bg-[hsl(var(--coop-green)/0.9)]">
           <Save className="h-4 w-4 mr-1" /> সংরক্ষণ করুন
         </Button>
         <Button onClick={handlePrint} variant="outline">
           <Printer className="h-4 w-4 mr-1" /> প্রিন্ট করুন
+        </Button>
+        <Button onClick={handleExportCSV} variant="outline">
+          <Download className="h-4 w-4 mr-1" /> CSV ডাউনলোড
         </Button>
       </div>
     </div>
