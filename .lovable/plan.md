@@ -1,20 +1,18 @@
 
 
-## SEO ও Social Meta — Lovable ব্রান্ডিং সরানো
+## ড্যাশবোর্ড কার্ড কমপ্যাক্ট ডিজাইন
 
-### পরিবর্তনসমূহ
+বর্তমানে CardHeader-এ `p-6` এবং CardContent-এ `p-6 pt-0` ডিফল্ট padding আছে — মোবাইলে (391px viewport) এটা অনেক জায়গা নেয়।
 
-#### 1. `index.html`
-- `meta name="author"` থেকে `"Lovable"` সরিয়ে `"স্বপ্নপূরণ সমবায় সমিতি"` দেওয়া
-- Open Graph meta সম্পূর্ণ করা: `og:image`, `og:url`, `og:locale` (bn_BD) যুক্ত
-- Twitter Card meta যুক্ত: `twitter:card`, `twitter:title`, `twitter:description`
-- Favicon/theme-color meta যুক্ত
+### পরিবর্তন — `src/pages/Dashboard.tsx`
 
-#### 2. `public/robots.txt`
-- যেহেতু এটি একটি internal accounting app, `Disallow: /` করা উচিত নাকি বর্তমান `Allow: /` রাখা — সেটি user preference অনুযায়ী। ডিফল্ট: Allow রাখা হবে।
+- CardHeader: `p-3 pb-1` (মোবাইলে), `sm:p-4 sm:pb-2` (ডেস্কটপে)
+- CardContent: `p-3 pt-0` / `sm:p-4 sm:pt-0`
+- আইকন ছোট করা: `h-4 w-4` (মোবাইলে `h-5 w-5` ছিল)
+- ভ্যালু font: `text-lg sm:text-2xl` (মোবাইলে ছোট)
+- লেবেল: `text-xs sm:text-sm`
+- Grid gap: `gap-2 sm:gap-3 lg:gap-4`
+- কার্ড border-left width `border-l-3` (সামান্য পাতলা)
 
-#### 3. `public/manifest.json` (নতুন ফাইল)
-- PWA-ready web app manifest — app name, short_name, theme_color, background_color, icons placeholder
-
-কোনো কোড লজিক পরিবর্তন নেই, শুধু meta/SEO ফাইল আপডেট।
+কোনো নতুন ফাইল বা dependency লাগবে না। শুধু Dashboard.tsx-এর কার্ড সেকশনের Tailwind ক্লাস আপডেট।
 
