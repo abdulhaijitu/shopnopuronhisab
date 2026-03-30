@@ -5,6 +5,25 @@ const COLLECTIONS_KEY = 'coop_collections';
 const AUTH_KEY = 'coop_authenticated';
 const PASSWORD_KEY = 'coop_password';
 
+// Backup & Restore
+export function exportAllData(): string {
+  return JSON.stringify({
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    members: localStorage.getItem(MEMBERS_KEY),
+    collections: localStorage.getItem(COLLECTIONS_KEY),
+    password: localStorage.getItem(PASSWORD_KEY),
+  });
+}
+
+export function importAllData(json: string) {
+  const data = JSON.parse(json);
+  if (!data.version || !data.members) throw new Error('অবৈধ ব্যাকআপ ফাইল');
+  localStorage.setItem(MEMBERS_KEY, data.members);
+  if (data.collections) localStorage.setItem(COLLECTIONS_KEY, data.collections);
+  if (data.password) localStorage.setItem(PASSWORD_KEY, data.password);
+}
+
 function read<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key);
