@@ -1,39 +1,31 @@
 
 
-## Full PWA সেটআপ — Offline সাপোর্ট সহ
+## Logo & Favicon যুক্ত করার পরিকল্পনা
 
-### পরিবর্তন
+দুটি আপলোড করা লোগো ব্যবহার করে অ্যাপের সব উপযুক্ত জায়গায় লোগো ও favicon সেট করা হবে।
 
-#### 1. `vite-plugin-pwa` ইনস্টল ও কনফিগারেশন — `vite.config.ts`
-- `vite-plugin-pwa` dependency যুক্ত
-- `VitePWA()` plugin যুক্ত করা:
-  - `registerType: "autoUpdate"`
-  - `devOptions: { enabled: false }` (editor preview-তে সমস্যা এড়াতে)
-  - `navigateFallbackDenylist: [/^\/~oauth/]`
-  - manifest তথ্য (name, short_name, theme_color, icons)
-  - workbox runtime caching কনফিগ
+### ফাইল ও পরিবর্তন
 
-#### 2. PWA আইকন তৈরি — `public/`
-- `pwa-192x192.png` ও `pwa-512x512.png` placeholder আইকন (সবুজ ব্যাকগ্রাউন্ডে "স্বপ্নপূরণ" টেক্সট সহ SVG-based)
+#### 1. অ্যাসেট কপি
+- `user-uploads://Logo-1.png` → `src/assets/logo.png` (বড় লোগো — sidebar, login, install page)
+- `user-uploads://Logo-circle.png` → `public/favicon.png` (favicon)
+- `user-uploads://Logo-circle.png` → `src/assets/logo-circle.png` (collapsed sidebar)
 
-#### 3. Service Worker গার্ড — `src/main.tsx`
-- iframe বা Lovable preview domain-এ থাকলে service worker unregister করা
-- শুধু production-এ SW কাজ করবে
+#### 2. `index.html` — Favicon সেট
+- বিদ্যমান `public/favicon.ico` থাকলে মুছে ফেলা
+- `<link rel="icon" href="/favicon.png" type="image/png">` যুক্ত
+- `<link rel="apple-touch-icon" href="/favicon.png">` যুক্ত
 
-#### 4. `public/manifest.json` আপডেট
-- icons array-তে 192x192 ও 512x512 আইকন reference যুক্ত
+#### 3. `src/components/LoginScreen.tsx`
+- Lock আইকনের বৃত্তের জায়গায় `logo.png` ইমেজ দেখানো
 
-#### 5. Install prompt পেজ (ঐচ্ছিক)
-- `/install` রাউটে একটি সহজ পেজ — ব্যবহারকারীকে "হোম স্ক্রিনে যুক্ত করুন" নির্দেশনা দেওয়া
+#### 4. `src/components/AppSidebar.tsx`
+- SidebarHeader-এ টেক্সটের উপরে `logo.png` ছোট করে দেখানো
+- Collapsed অবস্থায় `logo-circle.png` দেখানো ("স্ব" টেক্সটের বদলে)
 
-### গুরুত্বপূর্ণ সতর্কতা
-- PWA features (offline, install prompt) শুধু **published version**-এ কাজ করবে, Lovable editor preview-তে নয়।
+#### 5. `src/components/AppHeader.tsx`
+- Brand bar-এ শিরোনামের পাশে ছোট `logo-circle.png` দেখানো
 
-### ফাইল পরিবর্তন
-- `vite.config.ts` — VitePWA plugin যুক্ত
-- `src/main.tsx` — SW guard যুক্ত
-- `public/manifest.json` — icons আপডেট
-- `public/pwa-192x192.png`, `public/pwa-512x512.png` — আইকন
-- `src/pages/InstallPage.tsx` — নতুন install নির্দেশনা পেজ
-- `src/App.tsx` — `/install` রাউট যুক্ত
+#### 6. `src/pages/InstallPage.tsx`
+- পেজের শীর্ষে ছোট লোগো যুক্ত
 
