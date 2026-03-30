@@ -4,9 +4,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { isAuthenticated } from '@/lib/store';
 import LoginScreen from '@/components/LoginScreen';
-import AppHeader from '@/components/AppHeader';
+import AppSidebar from '@/components/AppSidebar';
 import Dashboard from '@/pages/Dashboard';
 import MembersPage from '@/pages/Members';
 import CollectionSheet from '@/pages/CollectionSheet';
@@ -34,15 +35,29 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AppHeader />
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/members" element={<MembersPage />} />
-            <Route path="/collection" element={<CollectionSheet />} />
-            <Route path="/yearly" element={<YearlyReport />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <SidebarProvider>
+            <div className="min-h-screen flex w-full">
+              <AppSidebar />
+              <div className="flex-1 flex flex-col min-w-0">
+                <header className="no-print h-12 flex items-center border-b border-border bg-background px-4 gap-3">
+                  <SidebarTrigger />
+                  <h2 className="text-sm font-semibold text-[hsl(var(--coop-green))] truncate">
+                    স্বপ্নপূরণ সমবায় সমিতি
+                  </h2>
+                </header>
+                <main className="flex-1 overflow-auto">
+                  <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/members" element={<MembersPage />} />
+                    <Route path="/collection" element={<CollectionSheet />} />
+                    <Route path="/yearly" element={<YearlyReport />} />
+                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+              </div>
+            </div>
+          </SidebarProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
