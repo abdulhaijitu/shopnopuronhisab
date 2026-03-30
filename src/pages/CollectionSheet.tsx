@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getMembers, getCollections, saveCollectionsBatch } from '@/lib/store';
-import { Member, CollectionEntry, MONTHS } from '@/lib/types';
+import { Member, CollectionEntry, MONTHS, getYearsList } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -23,13 +23,20 @@ interface RowData {
 export default function CollectionSheet() {
   const currentMonthIdx = new Date().getMonth();
   const [selectedMonth, setSelectedMonth] = useState<string>(MONTHS[currentMonthIdx]);
+  const [selectedYear, setSelectedYear] = useState<string>(new Date().getFullYear().toString());
   const [rows, setRows] = useState<RowData[]>([]);
+  const years = getYearsList();
+
+  const monthKey = `${selectedMonth}-${selectedYear}`;
 
   const loadData = useCallback(() => {
     const members = getMembers();
-    const collections = getCollections(selectedMonth);
+    const allCollections = getCollections(monthKey);
+    // backward compat: also check old format (just month name)
+    const oldCollections = selectedYear === new Date().getFullYear().toString() ? getCollections(selectedMonth) : [];
+    const combined = [...allCollections, ...oldCollections];
     const data: RowData[] = members.map(m => {
-      const entry = collections.find(c => c.memberId === m.id);
+      const entry = combined.find(c => c.memberId === m.id);
       return {
         member: m,
         amount: entry?.amount ?? 0,
@@ -38,7 +45,7 @@ export default function CollectionSheet() {
       };
     });
     setRows(data);
-  }, [selectedMonth]);
+  }, [monthKey, selectedMonth, selectedYear]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -49,7 +56,7 @@ export default function CollectionSheet() {
   const handleSave = () => {
     const entries: CollectionEntry[] = rows.map(r => ({
       memberId: r.member.id,
-      month: selectedMonth,
+      month: monthKey,
       amount: r.amount,
       paymentDate: r.paymentDate,
       paid: r.paid,
@@ -83,7 +90,7 @@ export default function CollectionSheet() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `হিসাব_সিট_${selectedMonth}.csv`;
+    a.download = `হিসাব_সিট_${selectedMonth}_${selectedYear}.csv`;
     a.click();
     URL.revokeObjectURL(url);
     toast.success('CSV ফাইল ডাউনলোড হচ্ছে');
@@ -99,12 +106,21 @@ export default function CollectionSheet() {
         <h1 className="text-xl font-bold">স্বপ্নপূরণ সমবায় সমিতি</h1>
         <p className="text-sm">গাউছুল আজম সুপার মার্কেট, কাঁটাবন রোড, ঢাকা-১২০৫</p>
         <p className="text-sm">যোগাযোগ: ০১৭২৭-৭০৭২৭৬, ০১৯৩০-০৬৩১১২</p>
-        <p className="text-base font-bold mt-2">মাসিক আদায় সিট — {selectedMonth}</p>
+        <p className="text-base font-bold mt-2">মাসিক আদায় সিট — {selectedMonth} {selectedYear}</p>
       </div>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 no-print">
         <h2 className="text-xl font-bold">প্রতি মাসের হিসাব সিট</h2>
         <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">বছর:</span>
+          <Select value={selectedYear} onValueChange={setSelectedYear}>
+            <SelectTrigger className="w-24">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {years.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}
+            </SelectContent>
+          </Select>
           <span className="text-sm font-medium">মাস:</span>
           <Select value={selectedMonth} onValueChange={setSelectedMonth}>
             <SelectTrigger className="w-40">

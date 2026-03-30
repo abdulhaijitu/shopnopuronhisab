@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { getMembers, getAllCollections } from '@/lib/store';
-import { MONTHS } from '@/lib/types';
+import { MONTHS, getYearsList } from '@/lib/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Download, Printer } from 'lucide-react';
 import { toast } from 'sonner';
 
-const YEARS = Array.from({ length: 10 }, (_, i) => (new Date().getFullYear() - 2 + i).toString());
+const YEARS = getYearsList();
 
 export default function YearlyReport() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
@@ -16,7 +16,8 @@ export default function YearlyReport() {
   // Build a map: memberId -> month -> amount
   const data = members.map((m, idx) => {
     const monthlyAmounts = MONTHS.map(month => {
-      const entry = allCollections.find(c => c.memberId === m.id && c.month === month && c.paid);
+      const monthKey = `${month}-${selectedYear}`;
+      const entry = allCollections.find(c => c.memberId === m.id && (c.month === monthKey || (c.month === month && selectedYear === new Date().getFullYear().toString())) && c.paid);
       return entry?.amount ?? 0;
     });
     const total = monthlyAmounts.reduce((s, a) => s + a, 0);

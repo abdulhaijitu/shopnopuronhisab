@@ -28,4 +28,11 @@ export const SEED_MEMBERS: Member[] = [
   { id: '5', serial: 5, name: 'মোঃ সোহেল (ডাই কাটিং)', occupation: 'ডাই কাটিং', mobile: '01723-226538', shares: 1 },
 ];
 
+export const START_YEAR = 2023;
+
+export const getYearsList = (): string[] => {
+  const currentYear = new Date().getFullYear();
+  return Array.from({ length: currentYear - START_YEAR + 1 }, (_, i) => (START_YEAR + i).toString());
+};
+
 export const DEFAULT_PASSWORD = 'somity2024';
