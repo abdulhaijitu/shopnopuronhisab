@@ -106,7 +106,7 @@ export default function CollectionSheet() {
         <h1 className="text-xl font-bold">স্বপ্নপূরণ সমবায় সমিতি</h1>
         <p className="text-sm">গাউছুল আজম সুপার মার্কেট, কাঁটাবন রোড, ঢাকা-১২০৫</p>
         <p className="text-sm">যোগাযোগ: ০১৭২৭-৭০৭২৭৬, ০১৯৩০-০৬৩১১২</p>
-        <p className="text-base font-bold mt-2">মাসিক আদায় সিট — {selectedMonth}</p>
+        <p className="text-base font-bold mt-2">মাসিক আদায় সিট — {selectedMonth} {selectedYear}</p>
       </div>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 no-print">
