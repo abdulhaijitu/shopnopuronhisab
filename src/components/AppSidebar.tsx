@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, FileSpreadsheet, BarChart3, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, FileSpreadsheet, BarChart3, Settings, LogOut, Download } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { useLocation } from 'react-router-dom';
 import { setAuthenticated } from '@/lib/store';
@@ -23,6 +23,7 @@ const navItems = [
   { path: '/collection', label: 'হিসাব সিট', icon: FileSpreadsheet },
   { path: '/yearly', label: 'বার্ষিক রিপোর্ট', icon: BarChart3 },
   { path: '/settings', label: 'সেটিংস', icon: Settings },
+  { path: '/install', label: 'অ্যাপ ইনস্টল', icon: Download },
 ];
 
 export default function AppSidebar() {
