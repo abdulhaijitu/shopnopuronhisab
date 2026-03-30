@@ -46,7 +46,7 @@ const App = () => {
                     স্বপ্নপূরণ সমবায় সমিতি
                   </h2>
                 </header>
-                <main className="flex-1 overflow-auto">
+                <main className="flex-1 overflow-auto pb-16 md:pb-0">
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/members" element={<MembersPage />} />
