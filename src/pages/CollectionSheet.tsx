@@ -199,7 +199,7 @@ export default function CollectionSheet() {
               </tr>
             ))}
             {rows.length === 0 && (
-              <tr><td colSpan={7} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই। প্রথমে সদস্য যুক্ত করুন।</td></tr>
+              <tr><td colSpan={8} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই। প্রথমে সদস্য যুক্ত করুন।</td></tr>
             )}
           </tbody>
           {rows.length > 0 && (
