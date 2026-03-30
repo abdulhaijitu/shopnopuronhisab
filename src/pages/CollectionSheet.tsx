@@ -23,7 +23,9 @@ interface RowData {
 export default function CollectionSheet() {
   const currentMonthIdx = new Date().getMonth();
   const [selectedMonth, setSelectedMonth] = useState<string>(MONTHS[currentMonthIdx]);
+  const [selectedYear, setSelectedYear] = useState<string>(new Date().getFullYear().toString());
   const [rows, setRows] = useState<RowData[]>([]);
+  const years = getYearsList();
 
   const loadData = useCallback(() => {
     const members = getMembers();
