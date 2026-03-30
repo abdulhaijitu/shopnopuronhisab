@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { setAuthenticated, getPassword } from '@/lib/store';
-import { Lock } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 interface Props { onSuccess: () => void; }
 
@@ -26,8 +26,8 @@ export default function LoginScreen({ onSuccess }: Props) {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--coop-blue)/0.1)] via-background to-[hsl(var(--coop-green)/0.1)] p-4">
       <Card className="w-full max-w-md shadow-2xl border-t-4 border-t-[hsl(var(--coop-blue))]">
         <CardHeader className="text-center space-y-3">
-          <div className="mx-auto w-16 h-16 bg-[hsl(var(--coop-green))] rounded-full flex items-center justify-center">
-            <Lock className="h-8 w-8 text-white" />
+          <div className="mx-auto w-20 h-20">
+            <img src={logo} alt="স্বপ্নপূরণ সমবায় সমিতি" className="w-full h-full object-contain" />
           </div>
           <CardTitle className="text-2xl text-[hsl(var(--coop-blue))]">
             স্বপ্নপূরণ সমবায় সমিতি
