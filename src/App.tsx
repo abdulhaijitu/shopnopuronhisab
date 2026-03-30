@@ -13,6 +13,7 @@ import MembersPage from '@/pages/Members';
 import CollectionSheet from '@/pages/CollectionSheet';
 import YearlyReport from '@/pages/YearlyReport';
 import SettingsPage from '@/pages/SettingsPage';
+import InstallPage from '@/pages/InstallPage';
 import NotFound from '@/pages/NotFound';
 import MobileBottomNav from '@/components/MobileBottomNav';
 
@@ -53,6 +54,7 @@ const App = () => {
                     <Route path="/collection" element={<CollectionSheet />} />
                     <Route path="/yearly" element={<YearlyReport />} />
                     <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/install" element={<InstallPage />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
