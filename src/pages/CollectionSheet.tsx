@@ -136,6 +136,7 @@ export default function CollectionSheet() {
             <tr>
               <th className="w-12">নং</th>
               <th>সদস্যের নাম</th>
+              <th className="hidden sm:table-cell">পেশা</th>
               <th className="hidden sm:table-cell">মোবাইল</th>
               <th className="w-16">শেয়ার</th>
               <th className="w-28">টাকার পরিমাণ</th>
