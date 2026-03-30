@@ -14,7 +14,7 @@ export default function LoginScreen({ onSuccess }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === APP_PASSWORD) {
+    if (password === getPassword()) {
       setAuthenticated(true);
       onSuccess();
     } else {
