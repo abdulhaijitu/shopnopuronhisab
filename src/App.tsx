@@ -14,6 +14,7 @@ import CollectionSheet from '@/pages/CollectionSheet';
 import YearlyReport from '@/pages/YearlyReport';
 import SettingsPage from '@/pages/SettingsPage';
 import NotFound from '@/pages/NotFound';
+import MobileBottomNav from '@/components/MobileBottomNav';
 
 const queryClient = new QueryClient();
 
@@ -39,13 +40,13 @@ const App = () => {
             <div className="min-h-screen flex w-full">
               <AppSidebar />
               <div className="flex-1 flex flex-col min-w-0">
-                <header className="no-print h-12 flex items-center border-b border-border bg-background px-4 gap-3">
+                <header className="no-print h-12 hidden md:flex items-center border-b border-border bg-background px-4 gap-3">
                   <SidebarTrigger />
                   <h2 className="hidden sm:block text-sm font-semibold text-[hsl(var(--coop-green))] truncate">
                     স্বপ্নপূরণ সমবায় সমিতি
                   </h2>
                 </header>
-                <main className="flex-1 overflow-auto">
+                <main className="flex-1 overflow-auto pb-16 md:pb-0">
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/members" element={<MembersPage />} />
@@ -55,6 +56,7 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
+                <MobileBottomNav />
               </div>
             </div>
           </SidebarProvider>
