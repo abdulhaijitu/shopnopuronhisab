@@ -93,7 +93,7 @@ export default function MembersPage() {
               </tr>
             ))}
             {members.length === 0 && (
-              <tr><td colSpan={5} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই</td></tr>
+              <tr><td colSpan={6} className="text-center py-8 text-muted-foreground">কোনো সদস্য নেই</td></tr>
             )}
           </tbody>
         </table>
