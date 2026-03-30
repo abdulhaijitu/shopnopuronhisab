@@ -1,18 +1,19 @@
 
 
-## ড্যাশবোর্ড কার্ড কমপ্যাক্ট ডিজাইন
+## সেটিংস পেইজ কমপ্যাক্ট ডিজাইন
 
-বর্তমানে CardHeader-এ `p-6` এবং CardContent-এ `p-6 pt-0` ডিফল্ট padding আছে — মোবাইলে (391px viewport) এটা অনেক জায়গা নেয়।
+### পরিবর্তন — `src/pages/SettingsPage.tsx`
 
-### পরিবর্তন — `src/pages/Dashboard.tsx`
+- পেইজ wrapper: `space-y-6` → `space-y-4`, padding `p-4 md:p-6` → `p-3 md:p-6`
+- CardHeader: কাস্টম `p-3 pb-1 sm:p-4 sm:pb-2` (ড্যাশবোর্ডের মতো)
+- CardContent: `p-3 pt-2 sm:p-4 sm:pt-2`
+- ফর্মের ভেতরের `space-y-4` → `space-y-3`
+- Input ফিল্ড: `h-9` (ছোট height)
+- Label: `text-xs sm:text-sm`
+- CardTitle: `text-base` (ছিল `text-lg`)
+- CardDescription: `text-xs`
+- বাটন গ্রুপের gap: `gap-3` → `gap-2`
+- পেইজ heading: `text-lg` (ছিল `text-xl`)
 
-- CardHeader: `p-3 pb-1` (মোবাইলে), `sm:p-4 sm:pb-2` (ডেস্কটপে)
-- CardContent: `p-3 pt-0` / `sm:p-4 sm:pt-0`
-- আইকন ছোট করা: `h-4 w-4` (মোবাইলে `h-5 w-5` ছিল)
-- ভ্যালু font: `text-lg sm:text-2xl` (মোবাইলে ছোট)
-- লেবেল: `text-xs sm:text-sm`
-- Grid gap: `gap-2 sm:gap-3 lg:gap-4`
-- কার্ড border-left width `border-l-3` (সামান্য পাতলা)
-
-কোনো নতুন ফাইল বা dependency লাগবে না। শুধু Dashboard.tsx-এর কার্ড সেকশনের Tailwind ক্লাস আপডেট।
+শুধু Tailwind ক্লাস পরিবর্তন, কোনো লজিক বা নতুন ফাইল নেই।
 
