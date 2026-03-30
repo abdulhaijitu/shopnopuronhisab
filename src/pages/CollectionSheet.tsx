@@ -27,11 +27,16 @@ export default function CollectionSheet() {
   const [rows, setRows] = useState<RowData[]>([]);
   const years = getYearsList();
 
+  const monthKey = `${selectedMonth}-${selectedYear}`;
+
   const loadData = useCallback(() => {
     const members = getMembers();
-    const collections = getCollections(selectedMonth);
+    const allCollections = getCollections(monthKey);
+    // backward compat: also check old format (just month name)
+    const oldCollections = selectedYear === new Date().getFullYear().toString() ? getCollections(selectedMonth) : [];
+    const combined = [...allCollections, ...oldCollections];
     const data: RowData[] = members.map(m => {
-      const entry = collections.find(c => c.memberId === m.id);
+      const entry = combined.find(c => c.memberId === m.id);
       return {
         member: m,
         amount: entry?.amount ?? 0,
@@ -40,7 +45,7 @@ export default function CollectionSheet() {
       };
     });
     setRows(data);
-  }, [selectedMonth]);
+  }, [monthKey, selectedMonth, selectedYear]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
