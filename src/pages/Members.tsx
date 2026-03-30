@@ -26,7 +26,7 @@ export default function MembersPage() {
 
   const openEdit = (m: Member) => {
     setEditing(m);
-    setForm({ name: m.name, mobile: m.mobile, shares: m.shares });
+    setForm({ name: m.name, occupation: m.occupation, mobile: m.mobile, shares: m.shares });
     setDialogOpen(true);
   };
 
