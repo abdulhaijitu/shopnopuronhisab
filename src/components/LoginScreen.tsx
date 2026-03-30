@@ -3,8 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { APP_PASSWORD } from '@/lib/types';
-import { setAuthenticated } from '@/lib/store';
+import { setAuthenticated, getPassword } from '@/lib/store';
 import { Lock } from 'lucide-react';
 
 interface Props { onSuccess: () => void; }
