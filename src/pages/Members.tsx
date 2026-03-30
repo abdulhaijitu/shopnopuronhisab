@@ -14,7 +14,7 @@ export default function MembersPage() {
   const [members, setMembers] = useState<Member[]>(getMembers());
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Member | null>(null);
-  const [form, setForm] = useState({ name: '', mobile: '', shares: 1 });
+  const [form, setForm] = useState({ name: '', occupation: '', mobile: '', shares: 1 });
 
   const refresh = () => setMembers(getMembers());
 
