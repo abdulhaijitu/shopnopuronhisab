@@ -24,6 +24,14 @@ export function setAuthenticated(v: boolean) {
   localStorage.setItem(AUTH_KEY, v ? 'true' : 'false');
 }
 
+// Password
+export function getPassword(): string {
+  return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+}
+export function setPassword(pwd: string) {
+  localStorage.setItem(PASSWORD_KEY, pwd);
+}
+
 // Members
 export function getMembers(): Member[] {
   const members = read<Member[]>(MEMBERS_KEY, []);
