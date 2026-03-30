@@ -20,7 +20,7 @@ export default function MembersPage() {
 
   const openAdd = () => {
     setEditing(null);
-    setForm({ name: '', mobile: '', shares: 1 });
+    setForm({ name: '', occupation: '', mobile: '', shares: 1 });
     setDialogOpen(true);
   };
 
