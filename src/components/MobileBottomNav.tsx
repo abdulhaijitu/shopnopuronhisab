@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
-import { LayoutDashboard, Users, ClipboardList, BarChart3, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, ClipboardList, BarChart3, Download } from 'lucide-react';
 
 const navItems = [
   { label: 'ড্যাশবোর্ড', path: '/', icon: LayoutDashboard },
