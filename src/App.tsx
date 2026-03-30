@@ -13,6 +13,7 @@ import MembersPage from '@/pages/Members';
 import CollectionSheet from '@/pages/CollectionSheet';
 import YearlyReport from '@/pages/YearlyReport';
 import SettingsPage from '@/pages/SettingsPage';
+import InstallPage from '@/pages/InstallPage';
 import NotFound from '@/pages/NotFound';
 import MobileBottomNav from '@/components/MobileBottomNav';
 
