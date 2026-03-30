@@ -65,12 +65,13 @@ export default function CollectionSheet() {
 
   const handleExportCSV = () => {
     const BOM = '\uFEFF';
-    const headers = ['নং', 'সদস্যের নাম', 'মোবাইল', 'শেয়ার', 'টাকার পরিমাণ', 'টাকা প্রদানের তারিখ', 'স্ট্যাটাস'];
+    const headers = ['নং', 'সদস্যের নাম', 'পেশা', 'মোবাইল', 'শেয়ার', 'টাকার পরিমাণ', 'টাকা প্রদানের তারিখ', 'স্ট্যাটাস'];
     const csvRows = [headers.join(',')];
     rows.forEach((r, i) => {
       csvRows.push([
         i + 1,
         `"${r.member.name}"`,
+        `"${r.member.occupation}"`,
         r.member.mobile,
         r.member.shares,
         r.amount,
