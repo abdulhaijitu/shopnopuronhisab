@@ -63,6 +63,31 @@ export default function CollectionSheet() {
     window.print();
   };
 
+  const handleExportCSV = () => {
+    const BOM = '\uFEFF';
+    const headers = ['নং', 'সদস্যের নাম', 'মোবাইল', 'শেয়ার', 'টাকার পরিমাণ', 'টাকা প্রদানের তারিখ', 'স্ট্যাটাস'];
+    const csvRows = [headers.join(',')];
+    rows.forEach((r, i) => {
+      csvRows.push([
+        i + 1,
+        `"${r.member.name}"`,
+        r.member.mobile,
+        r.member.shares,
+        r.amount,
+        r.paymentDate ? format(new Date(r.paymentDate), 'dd/MM/yyyy') : '',
+        r.paid ? 'পরিশোধিত' : 'বাকি',
+      ].join(','));
+    });
+    const blob = new Blob([BOM + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `হিসাব_সিট_${selectedMonth}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('CSV ফাইল ডাউনলোড হচ্ছে');
+  };
+
   const totalCollection = rows.filter(r => r.paid).reduce((s, r) => s + r.amount, 0);
   const paidCount = rows.filter(r => r.paid).length;
 
