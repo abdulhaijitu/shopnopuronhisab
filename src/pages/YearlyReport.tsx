@@ -12,7 +12,8 @@ export default function YearlyReport() {
   // Build a map: memberId -> month -> amount
   const data = members.map((m, idx) => {
     const monthlyAmounts = MONTHS.map(month => {
-      const entry = allCollections.find(c => c.memberId === m.id && c.month === month && c.paid);
+      const monthKey = `${month}-${selectedYear}`;
+      const entry = allCollections.find(c => c.memberId === m.id && (c.month === monthKey || (c.month === month && selectedYear === new Date().getFullYear().toString())) && c.paid);
       return entry?.amount ?? 0;
     });
     const total = monthlyAmounts.reduce((s, a) => s + a, 0);

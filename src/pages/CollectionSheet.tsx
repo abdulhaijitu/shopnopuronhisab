@@ -90,7 +90,7 @@ export default function CollectionSheet() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `হিসাব_সিট_${selectedMonth}.csv`;
+    a.download = `হিসাব_সিট_${selectedMonth}_${selectedYear}.csv`;
     a.click();
     URL.revokeObjectURL(url);
     toast.success('CSV ফাইল ডাউনলোড হচ্ছে');
