@@ -214,12 +214,15 @@ export default function CollectionSheet() {
       </div>
 
       {/* Action buttons */}
-      <div className="flex gap-3 no-print">
+      <div className="flex flex-wrap gap-3 no-print">
         <Button onClick={handleSave} className="bg-[hsl(var(--coop-green))] hover:bg-[hsl(var(--coop-green)/0.9)]">
           <Save className="h-4 w-4 mr-1" /> সংরক্ষণ করুন
         </Button>
         <Button onClick={handlePrint} variant="outline">
           <Printer className="h-4 w-4 mr-1" /> প্রিন্ট করুন
+        </Button>
+        <Button onClick={handleExportCSV} variant="outline">
+          <Download className="h-4 w-4 mr-1" /> CSV ডাউনলোড
         </Button>
       </div>
     </div>
