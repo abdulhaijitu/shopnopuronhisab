@@ -10,6 +10,7 @@ import AppHeader from '@/components/AppHeader';
 import Dashboard from '@/pages/Dashboard';
 import MembersPage from '@/pages/Members';
 import CollectionSheet from '@/pages/CollectionSheet';
+import YearlyReport from '@/pages/YearlyReport';
 import NotFound from '@/pages/NotFound';
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/members" element={<MembersPage />} />
             <Route path="/collection" element={<CollectionSheet />} />
+            <Route path="/yearly" element={<YearlyReport />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
