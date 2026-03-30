@@ -56,7 +56,7 @@ export default function CollectionSheet() {
   const handleSave = () => {
     const entries: CollectionEntry[] = rows.map(r => ({
       memberId: r.member.id,
-      month: selectedMonth,
+      month: monthKey,
       amount: r.amount,
       paymentDate: r.paymentDate,
       paid: r.paid,
