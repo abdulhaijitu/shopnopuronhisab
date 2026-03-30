@@ -112,6 +112,15 @@ export default function CollectionSheet() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 no-print">
         <h2 className="text-xl font-bold">প্রতি মাসের হিসাব সিট</h2>
         <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">বছর:</span>
+          <Select value={selectedYear} onValueChange={setSelectedYear}>
+            <SelectTrigger className="w-24">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {years.map(y => <SelectItem key={y} value={y}>{y}</SelectItem>)}
+            </SelectContent>
+          </Select>
           <span className="text-sm font-medium">মাস:</span>
           <Select value={selectedMonth} onValueChange={setSelectedMonth}>
             <SelectTrigger className="w-40">
