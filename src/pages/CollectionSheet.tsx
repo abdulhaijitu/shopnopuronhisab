@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getMembers, getCollections, saveCollectionsBatch } from '@/lib/store';
-import { Member, CollectionEntry, MONTHS } from '@/lib/types';
+import { Member, CollectionEntry, MONTHS, getYearsList } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
