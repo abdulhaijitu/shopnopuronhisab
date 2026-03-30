@@ -77,6 +77,7 @@ export default function MembersPage() {
               <tr key={m.id}>
                 <td className="text-center">{i + 1}</td>
                 <td>{m.name}</td>
+                <td>{m.occupation}</td>
                 <td>{m.mobile}</td>
                 <td className="text-center">{m.shares}</td>
                 <td className="no-print">
