@@ -14,6 +14,7 @@ import CollectionSheet from '@/pages/CollectionSheet';
 import YearlyReport from '@/pages/YearlyReport';
 import SettingsPage from '@/pages/SettingsPage';
 import NotFound from '@/pages/NotFound';
+import MobileBottomNav from '@/components/MobileBottomNav';
 
 const queryClient = new QueryClient();
 
