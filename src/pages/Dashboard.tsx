@@ -58,15 +58,15 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
         {cards.map((c, i) => (
-          <Card key={i} className="border-l-4" style={{ borderLeftColor: `hsl(${c.color})` }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">{c.label}</CardTitle>
-              <c.icon className="h-5 w-5" style={{ color: `hsl(${c.color})` }} />
+          <Card key={i} className="border-l-3" style={{ borderLeftColor: `hsl(${c.color})` }}>
+            <CardHeader className="flex flex-row items-center justify-between p-3 pb-1 sm:p-4 sm:pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">{c.label}</CardTitle>
+              <c.icon className="h-4 w-4" style={{ color: `hsl(${c.color})` }} />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{c.value}</div>
+            <CardContent className="p-3 pt-0 sm:p-4 sm:pt-0">
+              <div className="text-lg sm:text-2xl font-bold">{c.value}</div>
             </CardContent>
           </Card>
         ))}
