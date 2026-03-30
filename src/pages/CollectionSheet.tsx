@@ -149,6 +149,7 @@ export default function CollectionSheet() {
               <tr key={row.member.id} className={row.paid ? 'bg-[hsl(var(--coop-green)/0.05)]' : ''}>
                 <td className="text-center">{idx + 1}</td>
                 <td className="font-medium">{row.member.name}</td>
+                <td className="hidden sm:table-cell">{row.member.occupation}</td>
                 <td className="hidden sm:table-cell">{row.member.mobile}</td>
                 <td className="text-center">{row.member.shares}</td>
                 <td>
