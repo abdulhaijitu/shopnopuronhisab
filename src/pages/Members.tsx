@@ -66,6 +66,7 @@ export default function MembersPage() {
             <tr>
               <th className="w-16">নং</th>
               <th>সদস্যের নাম</th>
+              <th>পেশা</th>
               <th>মোবাইল</th>
               <th className="w-20">শেয়ার</th>
               <th className="w-28 no-print">অ্যাকশন</th>
