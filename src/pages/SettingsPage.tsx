@@ -53,31 +53,31 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4 md:p-6 space-y-6">
-      <h2 className="text-xl font-bold flex items-center gap-2">
-        <Settings className="h-5 w-5" /> সেটিংস
+    <div className="max-w-xl mx-auto p-3 md:p-6 space-y-4">
+      <h2 className="text-lg font-bold flex items-center gap-2">
+        <Settings className="h-4 w-4" /> সেটিংস
       </h2>
 
       <Card className="border-t-4 border-t-[hsl(var(--coop-blue))]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Shield className="h-5 w-5 text-[hsl(var(--coop-blue))]" /> পাসওয়ার্ড পরিবর্তন
+        <CardHeader className="p-3 pb-1 sm:p-4 sm:pb-2">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Shield className="h-4 w-4 text-[hsl(var(--coop-blue))]" /> পাসওয়ার্ড পরিবর্তন
           </CardTitle>
-          <CardDescription>অ্যাডমিন পাসওয়ার্ড পরিবর্তন করুন</CardDescription>
+          <CardDescription className="text-xs">অ্যাডমিন পাসওয়ার্ড পরিবর্তন করুন</CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleChange} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="current">বর্তমান পাসওয়ার্ড</Label>
-              <Input id="current" type="password" value={currentPwd} onChange={e => setCurrentPwd(e.target.value)} placeholder="বর্তমান পাসওয়ার্ড দিন" />
+        <CardContent className="p-3 pt-2 sm:p-4 sm:pt-2">
+          <form onSubmit={handleChange} className="space-y-3">
+            <div className="space-y-1">
+              <Label htmlFor="current" className="text-xs sm:text-sm">বর্তমান পাসওয়ার্ড</Label>
+              <Input id="current" type="password" value={currentPwd} onChange={e => setCurrentPwd(e.target.value)} placeholder="বর্তমান পাসওয়ার্ড দিন" className="h-9" />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="new">নতুন পাসওয়ার্ড</Label>
-              <Input id="new" type="password" value={newPwd} onChange={e => setNewPwd(e.target.value)} placeholder="নতুন পাসওয়ার্ড দিন" />
+            <div className="space-y-1">
+              <Label htmlFor="new" className="text-xs sm:text-sm">নতুন পাসওয়ার্ড</Label>
+              <Input id="new" type="password" value={newPwd} onChange={e => setNewPwd(e.target.value)} placeholder="নতুন পাসওয়ার্ড দিন" className="h-9" />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="confirm">নতুন পাসওয়ার্ড নিশ্চিত করুন</Label>
-              <Input id="confirm" type="password" value={confirmPwd} onChange={e => setConfirmPwd(e.target.value)} placeholder="আবার নতুন পাসওয়ার্ড দিন" />
+            <div className="space-y-1">
+              <Label htmlFor="confirm" className="text-xs sm:text-sm">নতুন পাসওয়ার্ড নিশ্চিত করুন</Label>
+              <Input id="confirm" type="password" value={confirmPwd} onChange={e => setConfirmPwd(e.target.value)} placeholder="আবার নতুন পাসওয়ার্ড দিন" className="h-9" />
             </div>
             <Button type="submit" className="bg-[hsl(var(--coop-blue))] hover:bg-[hsl(var(--coop-blue)/0.9)]">
               পাসওয়ার্ড পরিবর্তন করুন
@@ -87,14 +87,14 @@ export default function SettingsPage() {
       </Card>
 
       <Card className="border-t-4 border-t-[hsl(var(--coop-green))]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Download className="h-5 w-5 text-[hsl(var(--coop-green))]" /> ডেটা ব্যাকআপ ও রিস্টোর
+        <CardHeader className="p-3 pb-1 sm:p-4 sm:pb-2">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Download className="h-4 w-4 text-[hsl(var(--coop-green))]" /> ডেটা ব্যাকআপ ও রিস্টোর
           </CardTitle>
-          <CardDescription>সকল সদস্য ও আদায়ের তথ্য JSON ফাইল হিসেবে সংরক্ষণ ও পুনরুদ্ধার করুন</CardDescription>
+          <CardDescription className="text-xs">সকল সদস্য ও আদায়ের তথ্য JSON ফাইল হিসেবে সংরক্ষণ ও পুনরুদ্ধার করুন</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-3">
+        <CardContent className="p-3 pt-2 sm:p-4 sm:pt-2 space-y-3">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button onClick={handleExport} className="bg-[hsl(var(--coop-green))] hover:bg-[hsl(var(--coop-green)/0.9)]">
               <Download className="h-4 w-4 mr-1" /> ব্যাকআপ ডাউনলোড
             </Button>
