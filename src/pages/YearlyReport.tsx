@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import { getMembers, getAllCollections } from '@/lib/store';
-import { MONTHS } from '@/lib/types';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Download, Printer } from 'lucide-react';
-import { toast } from 'sonner';
+import { MONTHS, getYearsList } from '@/lib/types';
 
-const YEARS = Array.from({ length: 10 }, (_, i) => (new Date().getFullYear() - 2 + i).toString());
+const YEARS = getYearsList();
 
 export default function YearlyReport() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
