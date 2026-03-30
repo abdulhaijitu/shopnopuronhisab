@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, FileSpreadsheet, BarChart3, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Users, FileSpreadsheet, BarChart3, Settings, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { setAuthenticated } from '@/lib/store';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ const navItems = [
   { path: '/members', label: 'সদস্য তালিকা', icon: Users },
   { path: '/collection', label: 'হিসাব সিট', icon: FileSpreadsheet },
   { path: '/yearly', label: 'বার্ষিক রিপোর্ট', icon: BarChart3 },
+  { path: '/settings', label: 'সেটিংস', icon: Settings },
 ];
 
 export default function AppHeader() {

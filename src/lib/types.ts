@@ -27,4 +27,4 @@ export const SEED_MEMBERS: Member[] = [
   { id: '5', serial: 5, name: 'মোঃ সোহেল (ডাই কাটিং)', mobile: '01723-226538', shares: 1 },
 ];
 
-export const APP_PASSWORD = 'somity2024';
+export const DEFAULT_PASSWORD = 'somity2024';

@@ -1,8 +1,9 @@
-import { Member, CollectionEntry, SEED_MEMBERS } from './types';
+import { Member, CollectionEntry, SEED_MEMBERS, DEFAULT_PASSWORD } from './types';
 
 const MEMBERS_KEY = 'coop_members';
 const COLLECTIONS_KEY = 'coop_collections';
 const AUTH_KEY = 'coop_authenticated';
+const PASSWORD_KEY = 'coop_password';
 
 function read<T>(key: string, fallback: T): T {
   try {
@@ -21,6 +22,14 @@ export function isAuthenticated(): boolean {
 }
 export function setAuthenticated(v: boolean) {
   localStorage.setItem(AUTH_KEY, v ? 'true' : 'false');
+}
+
+// Password
+export function getPassword(): string {
+  return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+}
+export function setPassword(pwd: string) {
+  localStorage.setItem(PASSWORD_KEY, pwd);
 }
 
 // Members
