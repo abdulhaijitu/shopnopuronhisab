@@ -11,6 +11,7 @@ import Dashboard from '@/pages/Dashboard';
 import MembersPage from '@/pages/Members';
 import CollectionSheet from '@/pages/CollectionSheet';
 import YearlyReport from '@/pages/YearlyReport';
+import SettingsPage from '@/pages/SettingsPage';
 import NotFound from '@/pages/NotFound';
 
 const queryClient = new QueryClient();
