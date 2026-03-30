@@ -1,19 +1,39 @@
 
 
-## সেটিংস পেইজ কমপ্যাক্ট ডিজাইন
+## Full PWA সেটআপ — Offline সাপোর্ট সহ
 
-### পরিবর্তন — `src/pages/SettingsPage.tsx`
+### পরিবর্তন
 
-- পেইজ wrapper: `space-y-6` → `space-y-4`, padding `p-4 md:p-6` → `p-3 md:p-6`
-- CardHeader: কাস্টম `p-3 pb-1 sm:p-4 sm:pb-2` (ড্যাশবোর্ডের মতো)
-- CardContent: `p-3 pt-2 sm:p-4 sm:pt-2`
-- ফর্মের ভেতরের `space-y-4` → `space-y-3`
-- Input ফিল্ড: `h-9` (ছোট height)
-- Label: `text-xs sm:text-sm`
-- CardTitle: `text-base` (ছিল `text-lg`)
-- CardDescription: `text-xs`
-- বাটন গ্রুপের gap: `gap-3` → `gap-2`
-- পেইজ heading: `text-lg` (ছিল `text-xl`)
+#### 1. `vite-plugin-pwa` ইনস্টল ও কনফিগারেশন — `vite.config.ts`
+- `vite-plugin-pwa` dependency যুক্ত
+- `VitePWA()` plugin যুক্ত করা:
+  - `registerType: "autoUpdate"`
+  - `devOptions: { enabled: false }` (editor preview-তে সমস্যা এড়াতে)
+  - `navigateFallbackDenylist: [/^\/~oauth/]`
+  - manifest তথ্য (name, short_name, theme_color, icons)
+  - workbox runtime caching কনফিগ
 
-শুধু Tailwind ক্লাস পরিবর্তন, কোনো লজিক বা নতুন ফাইল নেই।
+#### 2. PWA আইকন তৈরি — `public/`
+- `pwa-192x192.png` ও `pwa-512x512.png` placeholder আইকন (সবুজ ব্যাকগ্রাউন্ডে "স্বপ্নপূরণ" টেক্সট সহ SVG-based)
+
+#### 3. Service Worker গার্ড — `src/main.tsx`
+- iframe বা Lovable preview domain-এ থাকলে service worker unregister করা
+- শুধু production-এ SW কাজ করবে
+
+#### 4. `public/manifest.json` আপডেট
+- icons array-তে 192x192 ও 512x512 আইকন reference যুক্ত
+
+#### 5. Install prompt পেজ (ঐচ্ছিক)
+- `/install` রাউটে একটি সহজ পেজ — ব্যবহারকারীকে "হোম স্ক্রিনে যুক্ত করুন" নির্দেশনা দেওয়া
+
+### গুরুত্বপূর্ণ সতর্কতা
+- PWA features (offline, install prompt) শুধু **published version**-এ কাজ করবে, Lovable editor preview-তে নয়।
+
+### ফাইল পরিবর্তন
+- `vite.config.ts` — VitePWA plugin যুক্ত
+- `src/main.tsx` — SW guard যুক্ত
+- `public/manifest.json` — icons আপডেট
+- `public/pwa-192x192.png`, `public/pwa-512x512.png` — আইকন
+- `src/pages/InstallPage.tsx` — নতুন install নির্দেশনা পেজ
+- `src/App.tsx` — `/install` রাউট যুক্ত
 
