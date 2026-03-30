@@ -3,6 +3,7 @@ import { LayoutDashboard, Users, FileSpreadsheet, BarChart3, Settings, LogOut, M
 import { Button } from '@/components/ui/button';
 import { setAuthenticated } from '@/lib/store';
 import { useState } from 'react';
+import logoCircle from '@/assets/logo-circle.png';
 
 const navItems = [
   { path: '/', label: 'ড্যাশবোর্ড', icon: LayoutDashboard },
@@ -24,18 +25,20 @@ export default function AppHeader() {
 
   return (
     <header className="no-print bg-[hsl(var(--sidebar-background))] text-[hsl(var(--sidebar-foreground))] shadow-lg">
-      {/* Top brand bar */}
       <div className="border-b border-[hsl(var(--sidebar-border))]">
-        <div className="max-w-7xl mx-auto px-4 py-3 text-center">
-          <h1 className="text-xl md:text-2xl font-bold text-[hsl(var(--coop-green))]">
-            স্বপ্নপূরণ সমবায় সমিতি
-          </h1>
-          <p className="text-xs md:text-sm opacity-80 mt-0.5">
-            গাউছুল আজম সুপার মার্কেট, কাঁটাবন রোড, ঢাকা-১২০৫
-          </p>
-          <p className="text-xs opacity-60">
-            যোগাযোগ: ০১৭২৭-৭০৭২৭৬, ০১৯৩০-০৬৩১১২
-          </p>
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-center gap-3">
+          <img src={logoCircle} alt="লোগো" className="h-10 w-10 rounded-full" />
+          <div className="text-center">
+            <h1 className="text-xl md:text-2xl font-bold text-[hsl(var(--coop-green))]">
+              স্বপ্নপূরণ সমবায় সমিতি
+            </h1>
+            <p className="text-xs md:text-sm opacity-80 mt-0.5">
+              গাউছুল আজম সুপার মার্কেট, কাঁটাবন রোড, ঢাকা-১২০৫
+            </p>
+            <p className="text-xs opacity-60">
+              যোগাযোগ: ০১৭২৭-৭০৭২৭৬, ০১৯৩০-০৬৩১১২
+            </p>
+          </div>
         </div>
       </div>
 
@@ -69,7 +72,6 @@ export default function AppHeader() {
             লগআউট
           </Button>
 
-          {/* Mobile menu toggle */}
           <button
             className="md:hidden p-2"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -78,7 +80,6 @@ export default function AppHeader() {
           </button>
         </div>
 
-        {/* Mobile nav */}
         {menuOpen && (
           <nav className="md:hidden pb-3 space-y-1">
             {navItems.map(item => (

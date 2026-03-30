@@ -16,6 +16,8 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
+import logo from '@/assets/logo.png';
+import logoCircle from '@/assets/logo-circle.png';
 
 const navItems = [
   { path: '/', label: 'ড্যাশবোর্ড', icon: LayoutDashboard },
@@ -48,6 +50,7 @@ export default function AppSidebar() {
       <SidebarHeader className="p-4">
         {!collapsed ? (
           <div className="text-center animate-fade-in">
+            <img src={logo} alt="স্বপ্নপূরণ সমবায় সমিতি" className="mx-auto h-12 w-auto mb-2" />
             <h1 className="text-lg font-bold text-[hsl(var(--coop-green))]">
               স্বপ্নপূরণ সমবায় সমিতি
             </h1>
@@ -57,7 +60,7 @@ export default function AppSidebar() {
           </div>
         ) : (
           <div className="flex justify-center animate-scale-in">
-            <span className="text-lg font-bold text-[hsl(var(--coop-green))]">স্ব</span>
+            <img src={logoCircle} alt="লোগো" className="h-8 w-8 rounded-full" />
           </div>
         )}
       </SidebarHeader>
