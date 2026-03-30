@@ -111,6 +111,10 @@ export default function MembersPage() {
               <Input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="নাম লিখুন" />
             </div>
             <div className="space-y-2">
+              <Label>পেশা</Label>
+              <Input value={form.occupation} onChange={e => setForm({ ...form, occupation: e.target.value })} placeholder="পেশা লিখুন" />
+            </div>
+            <div className="space-y-2">
               <Label>মোবাইল নম্বর</Label>
               <Input value={form.mobile} onChange={e => setForm({ ...form, mobile: e.target.value })} placeholder="০১XXX-XXXXXX" />
             </div>

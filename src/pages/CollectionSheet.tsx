@@ -205,7 +205,7 @@ export default function CollectionSheet() {
           {rows.length > 0 && (
             <tfoot>
               <tr className="bg-muted font-bold">
-                <td colSpan={4} className="text-right">মোট আদায়:</td>
+                <td colSpan={5} className="text-right">মোট আদায়:</td>
                 <td className="text-center">৳{totalCollection.toLocaleString('bn-BD')}</td>
                 <td></td>
                 <td className="text-center text-sm">{paidCount}/{rows.length} জন</td>
