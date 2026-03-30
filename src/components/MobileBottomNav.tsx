@@ -6,7 +6,7 @@ const navItems = [
   { label: 'সদস্য', path: '/members', icon: Users },
   { label: 'আদায়', path: '/collection', icon: ClipboardList },
   { label: 'রিপোর্ট', path: '/yearly', icon: BarChart3 },
-  { label: 'সেটিংস', path: '/settings', icon: Settings },
+  { label: 'ইনস্টল', path: '/install', icon: Download },
 ];
 
 const triggerHaptic = () => {

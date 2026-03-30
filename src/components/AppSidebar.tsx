@@ -23,6 +23,7 @@ const navItems = [
   { path: '/collection', label: 'হিসাব সিট', icon: FileSpreadsheet },
   { path: '/yearly', label: 'বার্ষিক রিপোর্ট', icon: BarChart3 },
   { path: '/settings', label: 'সেটিংস', icon: Settings },
+  { path: '/install', label: 'অ্যাপ ইনস্টল', icon: Download },
 ];
 
 export default function AppSidebar() {
